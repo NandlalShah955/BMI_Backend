@@ -33,17 +33,17 @@ app.post("/login", async (req, res) => {
 app.post("/signup", async (req, res) => {
   const { email, password, name} = req.body;
   try {
-    let existingUser = await Users.findOne({ email });
+    let user = await Users.findOne({ email });
 
-    if (existingUser) {
+    if (user) {
       res.status(404).send("Cannot create an user with existing email");
     }else{
-     let user = await Users.create({
+     let newuser = await Users.create({
       email,
       password,
       name,
     });
-    res.send({token:`${user.email}_#_${user.password}`}) 
+    res.send({token:`${newuser.email}_#_${newuser.password}`}) 
     }
    
   } catch (error) {
